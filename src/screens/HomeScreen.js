@@ -1,26 +1,24 @@
 import { Ionicons, Feather, AntDesign } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useLayoutEffect, useState } from "react";
 import {
-  Dimensions,
+  Alert,
   Pressable,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
 import Header from "../components/Header";
-import { TextInput } from "react-native-gesture-handler";
 import CalendarPicker from "react-native-calendar-picker";
 import Modal from "react-native-modal";
 import TravelMore from "../views/HomeScreen/TravelMore";
 
-const height = Dimensions.get("screen").height;
-const width = Dimensions.get("window").width;
-
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const route = useRoute();
   const [isCalendarModalVisible, setCalendarModalVisible] = useState(false);
   const [isRoomModalVisible, setRoomModalVisible] = useState(false);
   const [stayDetails, setStayDetails] = useState({
@@ -109,20 +107,54 @@ const HomeScreen = () => {
     });
   };
 
+  // HANDLE SEARCH
+
+  const searchPlaces = () => {
+    if (
+      !route.params ||
+      !selectedDates.selectedStartDate ||
+      !selectedDates.selectedEndDate
+    ) {
+      Alert.alert("Invalid details", "Please provide all details", [
+        {
+          text: "Cancel",
+          onPress: () => console.log("cancel"),
+        },
+        { text: "OK", onPress: () => console.log("ok") },
+      ]);
+    }
+
+    if (
+      route.params &&
+      selectedDates.selectedStartDate &&
+      selectedDates.selectedEndDate
+    ) {
+      navigation.navigate("Places", {
+        stayDetails: stayDetails,
+        selectedDates: selectedDates,
+        place: route.params?.searchedInput,
+      });
+    }
+  };
+
   return (
     <View>
+      <StatusBar barStyle="light-content" />
       <Header />
 
       <ScrollView>
         <View style={styles.searchWrap}>
           {/* DESTINATION */}
-          <Pressable style={styles.searchSection}>
+          <Pressable
+            onPress={() => navigation.navigate("Search")}
+            style={styles.searchSection}
+          >
             <Feather name="search" size={24} color="black" />
-            <TextInput
-              cursorColor="black"
-              placeholderTextColor="black"
-              placeholder="Enter your destination"
-            />
+            <Text onPress={() => navigation.navigate("Search")}>
+              {route?.params?.searchedInput
+                ? route?.params?.searchedInput
+                : "Enter your destination"}
+            </Text>
           </Pressable>
           {/* SELECTED DATES */}
           <Pressable onPress={onModalOpen} style={styles.searchSection}>
@@ -149,11 +181,13 @@ const HomeScreen = () => {
             </Text>
           </Pressable>
           {/* SEARCH BUTTON */}
-          <Pressable
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={searchPlaces}
             style={[styles.searchSection, { backgroundColor: "#003580" }]}
           >
             <Text style={styles.searchText}>Search</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
 
         <TravelMore />
@@ -344,7 +378,8 @@ const styles = StyleSheet.create({
   stayDetailsView: {
     minHeight: 240,
     padding: 20,
-    borderRadius: 15,
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15,
     justifyContent: "space-between",
     backgroundColor: "white",
     gap: 25,

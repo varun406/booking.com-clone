@@ -25,6 +25,14 @@ const data = [
     title: "Genius",
     desc: " You are ate genius level one in our loyalty program",
   },
+  {
+    title: "Genius",
+    desc: " You are ate genius level one in our loyalty program",
+  },
+  {
+    title: "Genius",
+    desc: " You are ate genius level one in our loyalty program",
+  },
 ];
 
 const TravelMore = () => {
@@ -33,7 +41,11 @@ const TravelMore = () => {
   return (
     <View>
       <Text style={styles.sectionTitle}>Travel More Spend Less</Text>
-      <ScrollView horizontal contentContainerStyle={styles.TravelCardScroll}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.TravelCardScroll}
+      >
         {data.map((item, index) => (
           <TouchableOpacity
             key={index}
