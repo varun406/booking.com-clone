@@ -57,7 +57,16 @@ const PlaceScreen = () => {
           <Ionicons name="filter" size={24} color="black" />
           <Text style={styles.filterText}>Filter</Text>
         </Pressable>
-        <Pressable style={styles.filter}>
+        <Pressable
+          onPress={() =>
+            navigation.navigate("Maps", {
+              data: data
+                .filter((item) => item.place === route.params?.place)
+                .flatMap((item) => item.properties),
+            })
+          }
+          style={styles.filter}
+        >
           <MaterialCommunityIcons
             name="map-marker-outline"
             size={24}
