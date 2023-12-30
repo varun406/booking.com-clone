@@ -344,7 +344,8 @@ const styles = StyleSheet.create({
   },
   calendarView: {
     minHeight: 400,
-    borderRadius: 15,
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15,
     padding: 20,
     justifyContent: "center",
     backgroundColor: "white",

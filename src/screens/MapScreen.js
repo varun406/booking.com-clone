@@ -7,7 +7,6 @@ import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 const MapScreen = ({ navigation }) => {
   const route = useRoute();
   const mapView = useRef(null);
-  console.log("route", route.params?.data);
 
   const coordinates = [];
   const details = route.params?.data?.map((property) => {
@@ -71,7 +70,11 @@ const MapScreen = ({ navigation }) => {
             }}
             title={property.name}
             description={property.address}
-          />
+          >
+            <View style={styles.marker}>
+              <Text style={styles.markerText}>₹{property.newPrice}</Text>
+            </View>
+          </Marker>
         ))}
       </MapView>
     </View>
@@ -80,4 +83,15 @@ const MapScreen = ({ navigation }) => {
 
 export default MapScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  marker: {
+    padding: 5,
+    backgroundColor: "#003580",
+    borderRadius: 6,
+  },
+  markerText: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: "white",
+  },
+});

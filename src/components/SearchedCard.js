@@ -1,13 +1,31 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const SearchedCard = ({ searchedData, propertyData }) => {
+  const navigation = useNavigation();
   const { name, rating, address, oldPrice, newPrice, photos, rooms } =
     propertyData || {};
   const { place, selectedDates, stayDetails } = searchedData || {};
   return (
-    <Pressable style={styles.cardContainer}>
+    <Pressable
+      onPress={() =>
+        navigation.navigate("Info", {
+          name,
+          rating,
+          address,
+          oldPrice,
+          newPrice,
+          photos,
+          rooms,
+          place,
+          selectedDates,
+          stayDetails,
+        })
+      }
+      style={styles.cardContainer}
+    >
       <View style={styles.propertyImageSection}>
         <Image
           source={{ uri: photos[0]?.image }}
