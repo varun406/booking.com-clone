@@ -6,6 +6,8 @@ import SearchScreen from "../screens/SearchScreen";
 import BottomTabNavigator from "./BottomTabNavigator";
 import MapScreen from "../screens/MapScreen";
 import PropertyInfoScreen from "../screens/PropertyInfoScreen";
+import AvailableRoomScreen from "../screens/AvailableRoomScreen";
+import ConfirmationScreen from "../screens/ConfirmationScreen";
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => {
@@ -25,6 +27,8 @@ const StackNavigator = () => {
         <Stack.Screen name="Places" component={PlaceScreen} />
         <Stack.Screen name="Maps" component={MapScreen} />
         <Stack.Screen name="Info" component={PropertyInfoScreen} />
+        <Stack.Screen name="AvailableRooms" component={AvailableRoomScreen} />
+        <Stack.Screen name="Confirmation" component={ConfirmationScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

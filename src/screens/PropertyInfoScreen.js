@@ -13,6 +13,8 @@ import {
   View,
 } from "react-native";
 import { pixelNormalize } from "../utils/Normalise";
+import PopularFacilities from "../components/PopularFacilities";
+import BottomStickyButton from "../components/BottomStickyButton";
 
 const PropertyInfoScreen = () => {
   const route = useRoute();
@@ -140,25 +142,17 @@ const PropertyInfoScreen = () => {
         <View style={styles.divider} />
         {/* NOTE: MOST POPULAR FACILITY SECTION STARTS*/}
         <View style={[styles.section]}>
-          <Text style={styles.sectionTitle}>Most Popular Facilities</Text>
-          <View style={styles.facilitySection}>
-            <Text style={styles.facility}>Room service</Text>
-            <Text style={styles.facility}>Free WIFI</Text>
-            <Text style={styles.facility}>Family room</Text>
-            <Text style={styles.facility}>Free parking</Text>
-            <Text style={styles.facility}>Swimming pool</Text>
-            <Text style={styles.facility}>Restar</Text>
-            <Text style={styles.facility}>Fitness center</Text>
-          </View>
+          <PopularFacilities />
         </View>
         {/* NOTE: MOST POPULAR FACILITY SECTION ENDS*/}
-        {/* NOTE: STICKY BUTTON*/}
       </ScrollView>
-      <View style={styles.availabilityButtonWrap}>
-        <TouchableOpacity style={[styles.availabilityButton, styles.section]}>
-          <Text style={styles.availabilityButtonText}>Select Availability</Text>
-        </TouchableOpacity>
-      </View>
+      {/* NOTE: STICKY BUTTON*/}
+      <BottomStickyButton
+        title="Select Availability"
+        onPress={() =>
+          navigation.navigate("AvailableRooms", { data: route.params })
+        }
+      />
     </View>
   );
 };
